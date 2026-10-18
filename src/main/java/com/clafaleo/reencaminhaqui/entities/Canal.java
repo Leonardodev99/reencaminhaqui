@@ -1,6 +1,8 @@
 package com.clafaleo.reencaminhaqui.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import com.clafaleo.reencaminhaqui.entities.enums.StatusCanal;
 
 @Entity
@@ -17,6 +19,9 @@ public class Canal {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_canal")
     private StatusCanal statusCanal;
+
+    @OneToMany(mappedBy = "canal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rota> rotas = new ArrayList<>();
 
     public Canal() {
     }
@@ -59,6 +64,27 @@ public class Canal {
 
     public void setStatusCanal(StatusCanal statusCanal) {
         this.statusCanal = statusCanal;
+    }
+
+    public List<Rota> getRotas() {
+        return rotas;
+    }
+
+    public void setRotas(List<Rota> rotas) {
+        this.rotas = rotas != null ? rotas : new ArrayList<>();
+    }
+
+    // utilitários para manter consistência do relacionamento bidirecional
+    public void addRota(Rota rota) {
+        if (rota == null) return;
+        rotas.add(rota);
+        rota.setCanal(this);
+    }
+
+    public void removeRota(Rota rota) {
+        if (rota == null) return;
+        rotas.remove(rota);
+        rota.setCanal(null);
     }
 
     @Override
