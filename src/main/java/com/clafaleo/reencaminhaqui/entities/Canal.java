@@ -1,10 +1,10 @@
 package com.clafaleo.reencaminhaqui.entities;
 
 import jakarta.persistence.*;
+import com.clafaleo.reencaminhaqui.entities.enums.StatusCanal;
 
 @Entity
 @Table(name = "canal")
-
 public class Canal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,13 +14,17 @@ public class Canal {
 
     private String provedor;
 
-    public Canal(){
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_canal")
+    private StatusCanal statusCanal;
 
-    };
+    public Canal() {
+    }
 
-    public Canal(Long id, String nome, String provedor) {
+    public Canal(Long id, String nome, StatusCanal statusCanal, String provedor) {
         this.id = id;
         this.nome = nome;
+        this.statusCanal = statusCanal;
         this.provedor = provedor;
     }
 
@@ -48,6 +52,15 @@ public class Canal {
         this.provedor = provedor;
     }
 
+    // getter/setter do enum (correto)
+    public StatusCanal getStatusCanal() {
+        return statusCanal;
+    }
+
+    public void setStatusCanal(StatusCanal statusCanal) {
+        this.statusCanal = statusCanal;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -72,6 +85,4 @@ public class Canal {
             return false;
         return true;
     }
-
-    
 }
