@@ -2,6 +2,7 @@ package com.clafaleo.reencaminhaqui.controllers;
 
 import com.clafaleo.reencaminhaqui.entities.Rota;
 import com.clafaleo.reencaminhaqui.entities.dto.RotaDTO;
+import com.clafaleo.reencaminhaqui.entities.dto.RotaUpdateDTO;
 import com.clafaleo.reencaminhaqui.mapper.RotaMapper;
 import com.clafaleo.reencaminhaqui.services.RotaService;
 import jakarta.validation.Valid;
@@ -67,6 +68,12 @@ public class RotaController {
     public ResponseEntity<RotaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody RotaDTO dto) {
         Rota entidade = RotaMapper.toEntity(dto);
         Rota atualizado = service.atualizar(id, entidade);
+        return ResponseEntity.ok(RotaMapper.toDto(atualizado));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<RotaDTO> atualizarParcial(@PathVariable Long id, @RequestBody RotaUpdateDTO dto) {
+        Rota atualizado = service.atualizarParcial(id, dto);
         return ResponseEntity.ok(RotaMapper.toDto(atualizado));
     }
 

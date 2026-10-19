@@ -2,6 +2,7 @@ package com.clafaleo.reencaminhaqui.services;
 
 import com.clafaleo.reencaminhaqui.entities.Canal;
 import com.clafaleo.reencaminhaqui.entities.Rota;
+import com.clafaleo.reencaminhaqui.entities.dto.RotaUpdateDTO;
 import com.clafaleo.reencaminhaqui.repositories.RotaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,6 +69,29 @@ public class RotaService {
         if (dadosAtualizados.getCanal() != null) {
             Canal c = new Canal();
             c.setId(dadosAtualizados.getCanal().getId());
+            rotaExistente.setCanal(c);
+        }
+
+        return rotaRepository.save(rotaExistente);
+    }
+
+    @Transactional
+    public Rota atualizarParcial(Long id, RotaUpdateDTO dto) {
+        Rota rotaExistente = rotaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rota não encontrada com id: " + id));
+
+        if (dto.getNumeroOrigem() != null) {
+            rotaExistente.setNumeroOrigem(dto.getNumeroOrigem());
+        }
+        if (dto.getNumeroDestino() != null) {
+            rotaExistente.setNumeroDestino(dto.getNumeroDestino());
+        }
+        if (dto.getStatusRota() != null) {
+            rotaExistente.setStatusRota(dto.getStatusRota());
+        }
+        if (dto.getCanalId() != null) {
+            Canal c = new Canal();
+            c.setId(dto.getCanalId());
             rotaExistente.setCanal(c);
         }
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 import com.clafaleo.reencaminhaqui.entities.enums.StatusRota;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rota")
@@ -31,7 +33,8 @@ public class Rota {
     private Canal canal;
 
     //relacionamento com a mensagem
-    //...
+    @OneToMany(mappedBy = "rota", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensagem> mensagens = new ArrayList<>();
 
     public Rota() {
     }
@@ -91,6 +94,24 @@ public class Rota {
 
     public void setCanal(Canal canal) {
         this.canal = canal;
+    }
+
+      public List<Mensagem> getMensagens() {
+        return mensagens;
+    }
+
+    public void setMensagens(List<Mensagem> mensagens) {
+        this.mensagens = mensagens;
+    }
+
+    public void addMensagem(Mensagem mensagem) {
+        mensagens.add(mensagem);
+        mensagem.setRota(this);
+    }
+
+    public void removeMensagem(Mensagem mensagem) {
+        mensagens.remove(mensagem);
+        mensagem.setRota(null);
     }
 
     @Override
