@@ -17,7 +17,7 @@ public final class MensagemMapper {
         m.setId(dto.getId());
         m.setRemetenteOriginal(dto.getRemetenteOriginal());
         m.setConteudoTexto(dto.getConteudoTexto());
-        m.setPayloadBruto(dto.getPayloadBruto());
+        m.setPayloadBruto(dto.getPayloadBruto()); // String direta
         m.setRecebidoEm(dto.getRecebidoEm());
         m.setTipoConteudo(dto.getTipoConteudo());
         if (dto.getRotaId() != null) {
@@ -25,7 +25,6 @@ public final class MensagemMapper {
             r.setId(dto.getRotaId());
             m.setRota(r);
         }
-        // não popula anexos/reencaminhamentos completos aqui — deixe endpoints específicos gerenciarem isso
         return m;
     }
 

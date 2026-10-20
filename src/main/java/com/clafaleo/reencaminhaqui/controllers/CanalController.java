@@ -2,6 +2,7 @@ package com.clafaleo.reencaminhaqui.controllers;
 
 import com.clafaleo.reencaminhaqui.entities.dto.CanalDTO;
 import com.clafaleo.reencaminhaqui.entities.dto.CanalUpdateDTO;
+import com.clafaleo.reencaminhaqui.entities.enums.StatusCanal;
 import com.clafaleo.reencaminhaqui.mapper.CanalMapper;
 import com.clafaleo.reencaminhaqui.services.CanalService;
 import jakarta.validation.Valid;
@@ -40,11 +41,9 @@ public class CanalController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CanalDTO>> listarTodos() {
-        var list = service.listarTodos().stream()
-                .map(CanalMapper::toDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<CanalDTO>> listar(@RequestParam(required = false) StatusCanal status) {
+        var canais = (status != null) ? service.buscarPorStatus(status) : service.listarTodos();
+        return ResponseEntity.ok(canais.stream().map(CanalMapper::toDto).toList());
     }
 
     @DeleteMapping("/{id}")
@@ -61,8 +60,8 @@ public class CanalController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<CanalDTO> atualizarParcial(@PathVariable Long id, @RequestBody CanalUpdateDTO dto) {
-        var atualizado = service.atualizarParcial(id, dto);
-        return ResponseEntity.ok(CanalMapper.toDto(atualizado));
+    public ResponseEntity<CanalDTO> atualizarParcial(@PathVariable Long id,
+                                                    @Valid @RequestBody CanalUpdateDTO dto) {
+        return ResponseEntity.ok(CanalMapper.toDto(service.atualizarParcial(id, dto)));
     }
 }

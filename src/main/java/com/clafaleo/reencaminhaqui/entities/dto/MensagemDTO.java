@@ -11,7 +11,7 @@ public class MensagemDTO {
     private Long id;
     private String remetenteOriginal;
     private String conteudoTexto;
-    private String payloadBruto;
+    private String payloadBruto;      // volta a ser String
     private LocalDateTime recebidoEm;
     private TipoConteudo tipoConteudo;
     private Long rotaId;

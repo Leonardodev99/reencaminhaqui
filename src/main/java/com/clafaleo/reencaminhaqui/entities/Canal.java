@@ -12,25 +12,28 @@ public class Canal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String nome;
 
+    @Column(nullable = false)
     private String provedor;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_canal")
-    private StatusCanal statusCanal;
+    @Column(name = "status_canal", nullable = false)
+    private StatusCanal statusCanal = StatusCanal.ATIVO;
 
-    @OneToMany(mappedBy = "canal", cascade = CascadeType.ALL, orphanRemoval = true)
+    // sem cascade: o histórico não deve ser apagado junto com o canal
+    @OneToMany(mappedBy = "canal")
     private List<Rota> rotas = new ArrayList<>();
 
     public Canal() {
     }
 
-    public Canal(Long id, String nome, StatusCanal statusCanal, String provedor) {
-        this.id = id;
-        this.nome = nome;
-        this.statusCanal = statusCanal;
-        this.provedor = provedor;
+    public Canal(Long id, String nome, String provedor, StatusCanal statusCanal) {
+    this.id = id;
+    this.nome = nome;
+    this.provedor = provedor;
+    this.statusCanal = statusCanal;
     }
 
     public Long getId() {
@@ -46,7 +49,7 @@ public class Canal {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+    this.nome = nome != null ? nome.trim().toUpperCase() : null;
     }
 
     public String getProvedor() {
@@ -54,7 +57,7 @@ public class Canal {
     }
 
     public void setProvedor(String provedor) {
-        this.provedor = provedor;
+    this.provedor = provedor != null ? provedor.trim().toUpperCase() : null;
     }
 
     // getter/setter do enum (correto)
@@ -89,26 +92,13 @@ public class Canal {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return getClass().hashCode();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Canal other = (Canal) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Canal other)) return false;
+        return id != null && id.equals(other.id);
     }
 }

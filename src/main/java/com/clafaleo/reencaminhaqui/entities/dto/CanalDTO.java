@@ -11,6 +11,7 @@ public class CanalDTO {
     @NotBlank
     private String nome;
 
+    @NotBlank
     private String provedor;
 
     @NotNull

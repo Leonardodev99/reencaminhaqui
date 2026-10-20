@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface CanalRepository extends JpaRepository<Canal, Long> {
     List<Canal> findByStatusCanal(StatusCanal statusCanal);
     Optional<Canal> findByNome(String nome);
+    boolean existsByNome(String nome);
+    boolean existsByNomeAndIdNot(String nome, Long id);
 }

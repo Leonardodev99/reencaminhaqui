@@ -24,7 +24,7 @@ public class Mensagem {
 
     @Lob
     @Column(name = "payload_bruto")
-    private String payloadBruto; // JSON bruto recebido (salvo como texto)
+    private String payloadBruto; // texto JSON bruto ou string qualquer
 
     @Column(name = "recebido_em")
     private LocalDateTime recebidoEm;
@@ -129,7 +129,6 @@ public class Mensagem {
         this.reencaminhamentos = reencaminhamentos != null ? reencaminhamentos : new ArrayList<>();
     }
 
-    // utilitários para manter consistência bidirecional
     public void addAnexo(Anexo anexo) {
         if (anexo == null) return;
         anexos.add(anexo);

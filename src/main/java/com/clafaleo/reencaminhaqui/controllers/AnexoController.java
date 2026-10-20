@@ -29,8 +29,8 @@ public class AnexoController {
     // Upload: multipart form-data
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnexoDTO> upload(@RequestPart("file") MultipartFile file,
-                                           @RequestPart("mensagemId") Long mensagemId,
-                                           @RequestPart(value = "urlOrigem", required = false) String urlOrigem) {
+                                        @RequestParam("mensagemId") Long mensagemId,
+                                        @RequestParam(value = "urlOrigem", required = false) String urlOrigem) {
         Anexo salvo = service.salvar(file, mensagemId, urlOrigem);
         AnexoDTO dto = AnexoMapper.toDto(salvo);
         return ResponseEntity.created(URI.create("/api/anexos/" + salvo.getId())).body(dto);
