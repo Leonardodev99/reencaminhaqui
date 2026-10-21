@@ -15,6 +15,9 @@ public class Mensagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "id_externo", unique = true)
+    private String idExterno;   // id da mens
+
     @Column(name = "remetente_original")
     private String remetenteOriginal;
 
@@ -64,6 +67,9 @@ public class Mensagem {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getIdExterno() { return idExterno; }
+    public void setIdExterno(String idExterno) { this.idExterno = idExterno; }
 
     public String getRemetenteOriginal() {
         return remetenteOriginal;

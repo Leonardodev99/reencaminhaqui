@@ -16,4 +16,5 @@ public interface MensagemRepository extends JpaRepository<Mensagem, Long> {
     Page<Mensagem> findByRotaId(Long rotaId, Pageable pageable);
     Optional<Mensagem> findByRemetenteOriginal(String remetenteOriginal);
     List<Mensagem> findByTipoConteudo(TipoConteudo tipoConteudo);
+    boolean existsByIdExterno(String idExterno);
 }

@@ -17,4 +17,5 @@ public interface RotaRepository extends JpaRepository<Rota, Long> {
     List<Rota> findByStatusRota(StatusRota statusRota);
     Optional<Rota> findByNumeroOrigem(String numeroOrigem);
     Optional<Rota> findByNumeroDestino(String numeroDestino);
+    Optional<Rota> findByNumeroOrigemAndStatusRota(String numeroOrigem, StatusRota statusRota);
 }

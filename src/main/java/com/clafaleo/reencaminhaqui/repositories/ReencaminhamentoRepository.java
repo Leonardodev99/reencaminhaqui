@@ -15,4 +15,7 @@ public interface ReencaminhamentoRepository extends JpaRepository<Reencaminhamen
     Page<Reencaminhamento> findByMensagemId(Long mensagemId, Pageable pageable);
     List<Reencaminhamento> findByStatusEnvio(StatusEnvio statusEnvio);
     Page<Reencaminhamento> findByStatusEnvio(StatusEnvio statusEnvio, Pageable pageable);
+
+    // novo: usado pelo retry do dispatcher
+    List<Reencaminhamento> findByStatusEnvioInAndTentativasLessThan(List<StatusEnvio> status, Integer max);
 }
