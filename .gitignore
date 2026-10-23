@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Segredos e uploads ###
+secrets.properties
+application-local.properties
+uploads/

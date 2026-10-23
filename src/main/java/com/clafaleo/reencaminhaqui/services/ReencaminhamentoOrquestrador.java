@@ -62,7 +62,7 @@ public class ReencaminhamentoOrquestrador {
             if (rota.getCanal() == null || rota.getCanal().getStatusCanal() != StatusCanal.ATIVO) continue;
 
             // evita loop: se B responde ao A, não reenvia de volta para B
-            if (rec.remetente().equals(rota.getNumeroDestino())) continue;
+            //if (rec.remetente().equals(rota.getNumeroDestino())) continue;
 
             Mensagem m = new Mensagem();
             m.setIdExterno(rec.idExterno());
